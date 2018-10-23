@@ -1,0 +1,48 @@
+body{
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+    margin: 0;
+    padding: 0;
+}
+
+.main_visual {
+    background-color: black;
+    height: 500px;
+}
+
+.main_visual h1{
+    position: absolute;
+    top: 230px;
+    left: 30%;
+    color: dimgray;
+    font-size: 40px;
+    /*padding-top: 240px;*/
+}
+
+#main{
+    width: 600px;
+    margin: 0 auto;
+}
+
+#main #canvas-training {
+    margin: 10px;
+}
+
+#main #canvas-training #canvas1 {
+    border: 1px solid #000;
+}
+
+footer{
+    height: 200px;
+    background-color: black;
+    color: dimgray;
+    text-align: center;
+}
+
+footer p{
+    padding-top: 90px;
+}
