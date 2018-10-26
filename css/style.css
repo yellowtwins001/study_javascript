@@ -28,11 +28,13 @@ h1,h2,h3,h4,h5,h6,p{
     margin: 0 auto;
 }
 
-#main #canvas-training {
+#main #canvas-training,
+#main #canvas-training-2 {
     margin: 10px;
 }
 
-#main #canvas-training #canvas1 {
+#main #canvas-training #canvas1,
+#main #canvas-training-2 #canvas2 {
     border: 1px solid #000;
 }
 
