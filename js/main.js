@@ -32,11 +32,11 @@ function draw(){
     raf = window.requestAnimationFrame(draw);
 }
   
-function moveRect(){
+function moveRect1(){
     draw();
 }
 
-function stopRect(){
+function stopRect1(){
     window.cancelAnimationFrame(raf);
 }
 
