@@ -33,8 +33,7 @@ function draw(){
 }
   
 function moveRect(){
-    raf = window.requestAnimationFrame(draw);
-    rect.draw();
+    draw();
 }
 
 function stopRect(){
@@ -53,50 +52,37 @@ var raf2;
 /* 四角形　デフォルトの場所は上の真ん中 */
 var rects = [];
 
-for(var i=0;i<=5;i++){
+for(var i=0;i<=25;i++){
     rects[i] = {
         x : 250,
         y : 0,
         vx : 100,
         vy : 5,
         draw : function(){
-            ctx2.beginPath();
             ctx2.fillStyle = 'grey';
             ctx2.fillRect(this.x,this.y,100,100);
+            ctx2.fillStyle = 'black';
+            ctx2.strokeRect(this.x,this.y,100,100);
+            ctx2.fillStyle = 'dimgrey';
+            ctx2.fillRect(this.x+15,this.y+15,70,70);
+            ctx2.fillStyle = 'black';
+            ctx2.strokeRect(this.x+15,this.y+15,70,70);
+            ctx2.save();
+        },
+        clear : function(){
+            ctx2.clearRect(this.x,this.y,100,100);
         }
     };
 }
 
-// x軸を5つを領域に分けて制御します
-function decisionX(x){
-    if(x >= 50 && x < 150){
-        return "one";
-    }
-    else if(x >= 150 && x < 250){
-        return "two";
-    }
-    else if(x >= 250 && x < 350){
-        return "three";
-    }
-    else if(x >= 350 && x < 450){
-        return "four";
-    }
-    else if(x >= 450 && x < 550){
-        return "five"
-    }
-}
-
 // 条件用の関数　rectの数によって変化する numは1以上
 function condition(num){
-    var result = (rects[0].y + rects[0].vy + 100 >= canvas2.height);
-    var x = rects[num].x
-    var x_position = decisionX(x);
+    var result = (rects[num].y + 100 >= canvas2.height);
+    var x = rects[num].x;
     if(num !== 0){
         for(var i=1;i<=num;i++){
-            if(x_position === decisionX(rects[i-1].x)){
-                result = result && (rects[i].y + rects[i].vy + 100 >= rects[i-1].y);
-            }else{
-                result = result && (rects[i].y + rects[i].vy + 100 >= canvas2.height);
+            if(x === rects[i-1].x){
+                result = (rects[num].y + 100 >= rects[i-1].y);
             }
         }
     }
@@ -106,29 +92,60 @@ function condition(num){
 // 下にいったらnum番目のrect止めるよ
 function stopRect(num){
     var x = rects[num].x;
-    var x_position = decisionX(x);
-    var cheker = "";
+    rects[num].y = canvas2.height - 100;
     if(num !== 0){
         for(var i=1;i<=num;i++){
-            if(x_position === decisionX(rects[i-1].x)){
+            if(x === rects[i-1].x){
                 rects[num].y = rects[i-1].y - 100;
-                cheker = "a";
-            }else{
-                if(cheker !== "a"){
-                    rects[num].y = canvas2.height - 100;
+            }
+        }
+    }
+}
+
+// ひとつのライン上に何個rectangleがあるか数える
+
+
+// gameover条件
+  function gameover(){
+      if(true/* ここに条件 */){
+          return "gameover";
+      }else{
+          return "";
+      }
+  }
+
+// 配列の数値の合計
+function sum(arr){
+    var sum = 0;
+    for(var num in arr){
+        sum += arr[num];
+    }
+    return sum;
+}
+
+// 揃ったら消す
+function clearLine(num){
+    var fill = [0,0,0,0,0];
+    for(var i=0;i<=num;i++){
+        if(rects[i].y === 400){
+            for(var row=1;row<=5;row++){
+                if(rects[i].x === 100 * row - 50){
+                    fill[row-1] = 1;
                 }
             }
         }
-        cheker = "";
-    }else{
-        rects[num].y = canvas2.height - 99;
     }
-    
+    if(sum(fill)==5){
+        for(var i=0;i<=num;i++){
+            rects[i].y += 100;
+        }
+    }
 }
 
 /* 四角形描くよ 動かすよ */
 /* 無限if作戦 */
 var count = 0;
+
 
 function draw2(){
     ctx2.clearRect(0,0, canvas2.width, canvas2.height);
@@ -137,24 +154,41 @@ function draw2(){
     rects[0].y += rects[0].vy;
     raf2 = window.requestAnimationFrame(draw2);
         
-    // ここfor文でまとめられる
-    if (condition(0)) {
-        stopRect(0);
-        rects[1].draw();
-        rects[1].y += rects[1].vy;
-        count = 1;
+    // rectangleの描画　とりあえず10個
+    var condition_result = new Boolean(true);
+    for(var i=0;i<19;i++){
+      condition_result = condition_result && condition(i);
+      if(condition_result){
+        stopRect(i);
+        rects[i+1].draw();
+        rects[i+1].y += rects[i+1].vy;
+        count = i+1;
+        clearLine(i);
+        if(rects[i].x === 250 && rects[i].y === 100){
+            window.cancelAnimationFrame(raf2);
+            var result = "Gameover";
+            alert(result);
+        }
+      }
     }
-    if (condition(1)) {
-        stopRect(1);
-        rects[2].draw();
-        rects[2].y += rects[2].vy;
-        count = 2;
+    
+    condition_result = condition_result && condition(19);
+    if(condition_result){
+        if(result !== "Gameover"){
+            rects[19].y -= rects[19].vy;
+            rects[19].clear();
+            rects[19].y += rects[19].vy;
+            rects[19].draw();
+            stopRect(19);
+            clearLine(19);
+            console.log(rects[19].y);
+            window.cancelAnimationFrame(raf2);
+            result = "Congratulation";
+            alert(result);
+        }else{
+            ctx2.clearRect(0,0, canvas2.width, canvas2.height);
+        }
     }
-    if(condition(2)){
-        stopRect(2);
-        window.cancelAnimationFrame(raf2);
-    }
-    // ここまで
 }
 
 /* ボタンで制御：動かす（加速） */
