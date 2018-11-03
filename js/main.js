@@ -20,6 +20,7 @@ var rect = {
     }
 };
 
+
 function draw(){
     ctx.clearRect(0,0, canvas.width, canvas.height);
     rect.draw();
@@ -32,11 +33,11 @@ function draw(){
     raf = window.requestAnimationFrame(draw);
 }
   
-function moveRect(){
+function moveRect1(){
     draw();
 }
 
-function stopRect(){
+function stopRect1(){
     window.cancelAnimationFrame(raf);
 }
 
@@ -149,6 +150,7 @@ var count = 0;
 
 function draw2(){
     ctx2.clearRect(0,0, canvas2.width, canvas2.height);
+    text_start.draw();
     rects[0].draw();
 
     rects[0].y += rects[0].vy;
