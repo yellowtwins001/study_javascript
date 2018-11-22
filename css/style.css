@@ -9,42 +9,96 @@ h1,h2,h3,h4,h5,h6,p{
     padding: 0;
 }
 
+/* homeボタン */
+nav #nav-home {
+    text-decoration: none;
+    position: absolute;
+        top : 250px;
+        left: 5%;
+    width : 150px;
+    height : 150px;
+    text-align: center;
+    line-height: 150px;
+    color : black;
+    border:5px solid rgb(231, 160, 160);
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+nav #nav-about {
+    position: absolute;
+        top : 250px;
+        left: 45%;
+    width : 150px;
+    height : 150px;
+    text-align: center;
+    line-height: 150px;
+    color : black;
+    border:5px solid rgb(231, 160, 160);
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+nav #nav-game {
+    position: absolute;
+        top : 250px;
+        left: 25%;
+    width : 150px;
+    height : 150px;
+    text-align: center;
+    line-height: 150px;
+    color : black;
+    border:5px solid rgb(231, 160, 160);
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+/* メインビジュアル particles.js */
 .main_visual {
     background-color: black;
-    height: 500px;
+    height: 100%;
 }
 
-.main_visual h1{
+
+/* テトリスのキャンバス */
+#main #canvas-tetris #canvas {
+    display : none;
+    border: 1px solid #fff;
     position: absolute;
-    top: 230px;
-    left: 30%;
+        top: 50px;
+        left: 30%;
+    background-color: #fff;
+}
+
+/* フッター */
+footer p {
+    position: absolute;
+        top: 500px;
+        right : 5%;
     color: dimgray;
-    font-size: 40px;
-    /*padding-top: 240px;*/
 }
 
-#main{
-    width: 600px;
-    margin: 0 auto;
+/* ふわふわアニメーション */
+.fuwafuwa {
+	-webkit-animation-name:fuwafuwa; /* fuwafuwaっていうアニメーションをしてね！ */
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	/*-webkit-animation-direction:alternate;*/
+	-webkit-animation-timing-function:ease;
+	
+	-moz-animation-name:fuwafuwa;
+	-moz-animation-duration:2s;
+	-moz-animation-iteration-count:infinite;
+	/*-moz-animation-direction:alternate;*/
+	-moz-animation-timing-function:ease;
 }
-
-#main #canvas-training,
-#main #canvas-training-2 {
-    margin: 10px;
+/* fuwafuwaっていうアニメーションはこんなふうだよ！ */
+@-webkit-keyframes fuwafuwa {
+	0% {-webkit-transform:translate(0, 0);}
+	50% {-webkit-transform:translate(0, -10px);}
+	100% {-webkit-transform:translate(0, 0);}
 }
-
-#main #canvas-training #canvas1,
-#main #canvas-training-2 #canvas2 {
-    border: 1px solid #000;
-}
-
-footer{
-    height: 200px;
-    background-color: black;
-    color: dimgray;
-    text-align: center;
-}
-
-footer p{
-    padding-top: 90px;
-}
+@-moz-keyframes fuwafuwa {
+	0% {-moz-transform:translate(0, 0);}
+	50% {-moz-transform:translate(0, -10px);}
+	100% {-moz-transform:translate(0, 0);}
